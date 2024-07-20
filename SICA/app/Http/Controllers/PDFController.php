@@ -4,90 +4,45 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Catalogo;
 
 class PDFController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function uploadPDF(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function uploadPDF(Request $request){
-
-        $request->validate(['pdf' =>'required|mimes:pdf|max:25480',
-        'image' => 'required|mimes:jpeg,png,jpg,gif|max:10240'
+        $request->validate([
+            'pdf' => 'required|mimes:pdf|max:25480',
+            'image' => 'required|mimes:jpeg,png,jpg,gif|max:10240'
         ]);
 
-        $pdfPath = $request->file('pdf')->storeAs('public/pdfs', $request->file('pdf')->getClientOriginalName());
+        $pdfName = time() . '_' . $request->file('pdf')->getClientOriginalName();
+        $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
 
-        $imagePath = $request->file('image')->storeAs('public/images', $request->file('image')->getClientOriginalName());
+        $pdfPath = $request->file('pdf')->storeAs('public/pdfs', $pdfName);
+        $imagePath = $request->file('image')->storeAs('public/images', $imageName);
+
+        Catalogo::create([
+            'pdf' => $pdfPath,
+            'image' => $imagePath,
+        ]);
 
         return back()->with('success', 'Catálogo subido correctamente');
     }
 
-    public function showPDFs(){
-        $pdfs = Storage::files('public/pdfs');
-        $images = Storage::files('public/images');
-        $catalogos=[];
+    public function showPDFs()
+    {
+        $catalogos = Catalogo::all()->map(function ($catalogo) {
+            $catalogo->cleanName = $this->cleanFileName(basename($catalogo->pdf));
+            return $catalogo;
+        });
 
-        foreach($pdfs as $index => $pdf){
-            $catalogos [] = [
-                'name' => basename($pdf),
-                'pdf' => $pdf,
-                'image' => $images[$index] ?? null,
-            ];
-        }
         return view('catalogos', compact('catalogos'));
+    }
+
+    private function cleanFileName($fileName)
+    {
+        $cleanName = preg_replace('/^\d+_/', '', $fileName);
+        $cleanName = preg_replace('/\.pdf$/', '', $cleanName);
+        return $cleanName;
     }
 }

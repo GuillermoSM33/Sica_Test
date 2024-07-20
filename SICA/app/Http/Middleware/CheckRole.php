@@ -9,8 +9,21 @@ use Illuminate\Support\Facades\Log;
 
 class CheckRole
 {
+    protected $publicRoutes = [
+        '/',
+        'servicios',
+        'osmosis',
+        'productos',
+        'catalogos',
+    ];
+
     public function handle(Request $request, Closure $next, ...$roles)
     {
+        // Check if the current route is in the public routes
+        if (in_array($request->path(), $this->publicRoutes)) {
+            return $next($request);
+        }
+
         if (!Auth::check()) {
             return redirect('/');
         }

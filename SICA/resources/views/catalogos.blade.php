@@ -33,33 +33,25 @@
 
     </style>
 
-    <div class="content">
-
-        <div class="blue-bar">
-            <h1 class="section-title">Conoce nuestros catálogos</h1>
-        </div>
-
-        <div class="mt-5">
-            <h2>Catálogos Subidos</h2>
-
-            <div class="row">
-
-                @foreach($catalogos as $catalogo)
-                <div class="col-md-4 catalogo-item">
-
-                    <a href="{{ Storage::url($catalogo['pdf']) }}" target="_blank">
-                        <img src="{{ Storage::url($catalogo['image']) }}" alt="{{ $catalogo['name'] }}">
-                    </a>
-
-                    <a href="{{ Storage::url($catalogo['pdf']) }}" target="_blank">{{ $catalogo['name'] }}</a>
-
-                </div>
-                @endforeach
-
-            </div>
-
-        </div>
-
+<div class="content">
+    <div class="blue-bar">
+        <h1 class="section-title">Conoce nuestros catálogos</h1>
     </div>
+
+    <div class="mt-5">
+        <h2>Catálogos Subidos</h2>
+
+        <div class="row">
+            @foreach($catalogos as $catalogo)
+            <div class="col-md-4 catalogo-item">
+                <a href="{{ Storage::url($catalogo->pdf) }}" target="_blank">
+                    <img src="{{ Storage::url($catalogo->image) }}" alt="{{ $catalogo->cleanName }}">
+                </a>
+                <a href="{{ Storage::url($catalogo->pdf) }}" target="_blank">{{ $catalogo->cleanName }}</a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
 
 </x-app-layaout>
