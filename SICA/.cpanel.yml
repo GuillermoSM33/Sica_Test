@@ -1,7 +1,10 @@
 ---
 deployment:
   tasks:
-    - composer install --no-dev --optimize-autoloader
+    - export DEPLOYPATH=/home2/sicaserv/public_html/
+    - /bin/cp -R * $DEPLOYPATH
+    - cd $DEPLOYPATH
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader
     - php artisan migrate --force
     - php artisan config:cache
     - php artisan route:cache
