@@ -5,8 +5,9 @@
                 <div class="card h-100">
                     <div class="row g-0 h-100">
                         <div class="col-md-12 img-container">
-                            <img src="{{ asset('img/' . $servicio->imagen_servicio) }}" class="img-fluid" alt="{{ $servicio->nombre_servicio }}">
+                            <img src="{{ env('APP_URL') . '/img/' . $servicio->imagen_servicio }}" class="img-fluid" alt="{{ $servicio->nombre_servicio }}">
                         </div>
+
                         <div class="col-md-12 d-flex flex-column">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $servicio->nombre_servicio }}</h5>

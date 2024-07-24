@@ -221,7 +221,7 @@
                 <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 SICA, Inc</span>
             </div>
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="https://wa.me/9982428928"><i class="fab fa-whatsapp fa-2x"></i></a></li>
                 <li class="ms-3"><a class="text-body-secondary" href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
                 <li class="ms-3"><a class="text-body-secondary" href="https://www.facebook.com/profile.php?id=61561158332942"><i class="fab fa-facebook fa-2x"></i></a></li>
             </ul>
