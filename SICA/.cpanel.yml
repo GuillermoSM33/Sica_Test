@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home2/sicaserv/public_html/
-    - /bin/cp -R * $DEPLOYPATH
+    - /bin/cp -R public/* $DEPLOYPATH
     - cd $DEPLOYPATH
     - /usr/local/bin/composer install --no-dev --optimize-autoloader
     - php artisan migrate --force
